@@ -1,8 +1,8 @@
 apiVersion: vmoperator.vmware.com/v1alpha1
 kind: VirtualMachine
 metadata:
-  name: vmsvc-harbor-vm
-  namespace: chiara-demo
+  name: vmsvc-my-centos-vm
+  namespace: jkolaric-01
 spec:
   imageName: centos-stream-8-vmservice-v1alpha1-1638306496810
   className: best-effort-small
@@ -18,8 +18,8 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-    name: vmsvc-harbor-cm
-    namespace: chiara-demo
+    name: vmsvc-my-vm-cm
+    namespace: jkolaric-01
 data:
   user-data: >-
     I2Nsb3VkLWNvbmZpZwoKcGFzc3dvcmQ6IFZNV0FSRQpzc2hfcHdhdXRoOiB0cnVlCgp1c2VyczoKICAtIG5hbWU6IHZtd2FyZQogICAgc3VkbzogQUxMPShBTEwpIE5PUEFTU1dEOkFMTAogICAgbG9ja19wYXNzd2Q6IGZhbHNlCiAgICAjIFBhc3N3b3JkIHNldCB0byBBZG1pbiEyMwogICAgcGFzc3dkOiAnJDEkc2FsdCRTT0MzM2ZWYkEvWnhlSXdENXl3MXUxJwogICAgc2hlbGw6IC9iaW4vYmFzaAoKd3JpdGVfZmlsZXM6CiAgLSBjb250ZW50OiB8CiAgICAgIFZNU1ZDIFNheXMgSGVsbG8gV29ybGQKICAgIHBhdGg6IC9oZWxsb3dvcmxkCg==
