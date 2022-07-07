@@ -1,0 +1,21 @@
+- name: Create a Tanzu Cluster - cluster01
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: run.tanzu.vmware.com/v1alpha1
+      kind: TanzuKubernetesCluster
+      metadata:
+        name: cluster01
+        namespace: ansible-ns
+      spec:
+        distribution:
+          version: v1.20
+        topology:
+          controlPlane:
+            count: 1                                 #number of control plane nodes
+            class: best-effort-small                 #vmclass for control plane nodes
+            storageClass: tanzu
+          workers:
+            count: 1                                 #number of worker nodes
+            class: best-effort-small                 #vmclass for worker nodes
+            storageClass: tanzu

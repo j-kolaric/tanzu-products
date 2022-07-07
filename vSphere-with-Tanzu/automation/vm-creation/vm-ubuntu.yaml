@@ -1,0 +1,25 @@
+apiVersion: vmoperator.vmware.com/v1alpha1
+kind: VirtualMachine
+metadata:
+  name: vmsvc-ubuntu-vm
+  namespace: chiara-demo
+spec:
+  imageName: ubuntu-20-1633387172196
+  className: best-effort-small
+  powerState: poweredOn
+  storageClass: vc01cl01-t0compute
+  networkInterfaces:
+  - networkName: user-workload
+    networkType: vsphere-distributed
+  vmMetadata:
+      configMapName: vmsvc-ubuntu-cm
+      transport: OvfEnv
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: vmsvc-ubuntu-cm
+    namespace: chiara-demo
+data:
+  user-data: >-
+    I2Nsb3VkLWNvbmZpZwoKcGFzc3dvcmQ6IFZNV0FSRQpzc2hfcHdhdXRoOiB0cnVlCgp1c2VyczoKICAtIG5hbWU6IHZtd2FyZQogICAgc3VkbzogQUxMPShBTEwpIE5PUEFTU1dEOkFMTAogICAgbG9ja19wYXNzd2Q6IGZhbHNlCiAgICAjIFBhc3N3b3JkIHNldCB0byBBZG1pbiEyMwogICAgcGFzc3dkOiAnJDEkc2FsdCRTT0MzM2ZWYkEvWnhlSXdENXl3MXUxJwogICAgc2hlbGw6IC9iaW4vYmFzaAoKd3JpdGVfZmlsZXM6CiAgLSBjb250ZW50OiB8CiAgICAgIFZNU1ZDIFNheXMgSGVsbG8gV29ybGQKICAgIHBhdGg6IC9oZWxsb3dvcmxkCg==
