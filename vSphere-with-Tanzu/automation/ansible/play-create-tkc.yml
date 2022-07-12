@@ -1,7 +1,0 @@
----
-- hosts: local
-  gather_facts: false
-  connection: local
-  roles:
-    - create-tkc
-

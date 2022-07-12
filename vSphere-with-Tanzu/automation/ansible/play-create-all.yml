@@ -1,8 +1,0 @@
----
-- hosts: local
-  gather_facts: false
-  connection: local
-  roles:
-    - create-vns
-    - create-tkc
-

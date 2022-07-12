@@ -1,0 +1,76 @@
+---
+#
+# Deploy Worklod Compute Manage in vCenter Server.
+#
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  collections:
+    - vmware.vsphere
+  vars_files:
+    - /Users/jkolaric/Documents/REPOS/tanzu-products/vSphere-with-Tanzu/automation/ansible/roles/default/main.yml
+  vars:
+    # Controls overall environment state - commissioned (present) / decommissioned (absent)
+    environment_state: '{{ tenant_environment_state }}'
+
+  tasks:
+    - name: "Confirm environment_state is defined"
+      ansible.builtin.meta: end_play
+      when: tenant_environment_state is undefined
+
+    # The playbook supports decommissioning, we just don't need it for now
+    # as we decommission at full SDDC level, not components
+    - name: "Playbook does not support decommissioning"
+      ansible.builtin.meta: end_play
+      when: environment_state == 'absent'
+
+    - name: Get AVI Certificate
+      ansible.builtin.uri:
+        validate_certs: False
+        url: "https://{{avi_hostname}}/api/sslkeyandcertificate?name={{avi_name}}"
+        user: "{{avi_localos_users.admin.username}}"
+        password: "{{avi_localos_users.admin.password}}"
+        method: GET
+        status_code: 200,302,301,503
+      register: avi_cert
+      when: wcp_network_provider == "VSPHERE_NETWORK"
+
+    - name: Set fact for AVI certificate
+      ansible.builtin.set_fact:
+        certificate_authority_chain: "{{ avi_cert.json.results[0].certificate.certificate }}"
+      when: wcp_network_provider == "VSPHERE_NETWORK"
+
+    - name: Update AVI certificate in wcp load_balancer spec
+      ansible.builtin.set_fact:
+        load_balancer_config_spec: "{{ wcp_load_balancer_config_spec | combine({'avi_config_create_spec':{'certificate_authority_chain': certificate_authority_chain}}, recursive=True) }}"
+      when: wcp_network_provider == "VSPHERE_NETWORK"
+
+    - name: Configure WCP in the Deployed vCenter
+      vcenter_wcp_cluster:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: False
+        cluster_name: "{{ wcp_cluster_name }}"
+        datacenter_name: "{{ wcp_datacenter_name }}"
+        dvs_name: "{{ wcp_dvs_name }}"
+        cluster_size: "{{ wcp_cluster_size | default(omit) }}"
+        service_cidr: "{{ wcp_service_cidr | default(omit)}}"
+        pod_cidrs: "{{ wcp_pod_cidrs | default(omit)}}"
+        ingress_cidrs: "{{ wcp_ingress_cidrs | default(omit)}}"
+        egress_cidrs: "{{ wcp_egress_cidrs | default(omit)}}"
+        nsxt_edge_cluster_name: "{{ wcp_edge_cluster_name | default(omit) }}"
+        management_network: "{{ wcp_management_network }}"
+        master_dns_servers: "{{ wcp_master.dns_servers }}"
+        worker_dns_servers: "{{ wcp_worker.dns_servers | default(omit) }}"
+        master_dns_search_domains: "{{ wcp_master.dns_search_domains | default(omit) }}"
+        master_ntp_servers: "{{ wcp_master.ntp_servers | default(omit) }}"
+        master_storage_policy: "{{ wcp_storage_policies.master }}"
+        ephemeral_storage_policy: "{{ wcp_storage_policies.ephemeral| default(omit) }}"
+        image_storage_policy: "{{ wcp_storage_policies.image }}"
+        default_kubernetes_service_content_library: "{{ wcp_upstream_spec.vcenter_content_libraries.wcp_content_library.name | default(omit) }}"
+        login_banner: "{{ wcp_login_banner | default(omit) }}"
+        network_provider: "{{ wcp_network_provider }}"
+        load_balancer_config_spec: "{{ load_balancer_config_spec | default(omit) }}"
+        workload_networks_spec: "{{ wcp_workload_networks_spec | default(omit) }}"
+        state: "{{ environment_state }}"

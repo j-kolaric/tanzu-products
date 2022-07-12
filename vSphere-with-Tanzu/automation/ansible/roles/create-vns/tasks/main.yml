@@ -1,7 +1,0 @@
----
-- name: Create a k8s namespace - ansible-ns 
-  kubernetes.core.k8s:
-    name: ansible-ns
-    api_version: v1
-    kind: Namespace
-    state: present

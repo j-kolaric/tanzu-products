@@ -1,0 +1,39 @@
+---
+environment_state: present
+tenant_environment_state: present
+
+# defaults file for wcp_config
+vcenter_hostname: 'vcsa.cpod-xpday.az-fkd.cloud-garage.net'
+vcenter_username: 'administrator@vsphere.local'
+vcenter_password: 'xxxxxxxxxxxxx'
+vcenter_validate_certs: False
+  
+wcp_cluster_name: 'cl01'
+wcp_datacenter_name: 'dc01'
+wcp_dvs_name: 'cl01-vds01'
+wcp_cluster_size: 'SMALL'
+wcp_service_cidr: '10.96.0.0/24'
+wcp_pod_cidrs: '10.244.0.0/21'
+wcp_ingress_cidrs: '10.28.9.0/24'
+wcp_egress_cidrs: '10.28.8.0/24'
+wcp_edge_cluster_name: 'ec01'
+wcp_management_network: {
+ "address_count": "5",
+ "cidr": "172.17.18.0/24",
+ "gateway": "172.17.18.1",
+ "portgroup_name": "cl01-vds01-pg-mgmt",
+ "starting_address": "172.17.18.101"
+  }
+wcp_master:
+  dns_servers: '172.17.18.1'
+  dns_search_domains: 'cpod-xpday.az-fkd.cloud-garage.net'
+  ntp_servers: '172.17.18.1'
+wcp_storage_policies:
+  master: 'K8S-Storage-Policy'
+  ephemeral: 'K8S-Storage-Policy'
+  image: 'K8S-Storage-Policy'
+wcp_upstream_spec:
+  vcenter_content_libraries:
+    wcp_content_library:
+      name: 'TanzuKubernetesRelease-subscriber'
+wcp_network_provider: 'NSXT_CONTAINER_PLUGIN'
