@@ -1,5 +1,6 @@
 Service installer : 
     https://docs.vmware.com/en/Service-Installer-for-VMware-Tanzu/1.2/service-installer/GUID-WhatsNew.html
+    https://github.com/vmware-tanzu/service-installer-for-vmware-tanzu/blob/1.3-1.5.4/docs/product/release/vSphere%20-%20Backed%20by%20VDS/TKGs/TKOonVsphereVDStkgs.md
 
 Service installer peut être téléchargé depuis la marketplace vmware : https://marketplace.cloud.vmware.com/services/details/service-installer-for-vmware-tanzu-1?slug=true
 
