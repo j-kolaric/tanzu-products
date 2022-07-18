@@ -28,6 +28,7 @@ for airgapped
 A la fin du processus, un fichier json est généré et la commande suivante doit être lancée depuis la VM SIVT pour installer avi-controller, le configurer et activer le service WCP (Workload Control Plane)
 
 $ ssh root@SIVT 
+
 $ arcas --env vsphere --file /path/to/vsphere-dvs-tkgs-wcp.json --avi_configuration --avi_wcp_configuration --enable_wcp --verbose
 
 Une fois cette commande terminée, il faut désormais créer un Vsphere namespace et déployer un cluster TKC. Cela peut être fait depuis la console SIVT
