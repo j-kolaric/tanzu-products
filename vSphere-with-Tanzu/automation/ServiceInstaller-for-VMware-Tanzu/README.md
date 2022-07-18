@@ -4,6 +4,9 @@ Service installer :
 
 Service installer peut être téléchargé depuis la marketplace vmware : https://marketplace.cloud.vmware.com/services/details/service-installer-for-vmware-tanzu-1?slug=true
 
+Bien vérifier les pré-requis pour que l'installation se déroule sans accroc :
+    - Création des port-group dans le vcenter
+
 for airgapped 
     télécharger:
         - SIVT v1.2 (Service installer for VMware Tanzu)
