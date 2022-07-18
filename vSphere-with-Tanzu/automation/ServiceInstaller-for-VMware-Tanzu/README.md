@@ -1,6 +1,8 @@
 Service installer : 
     https://docs.vmware.com/en/Service-Installer-for-VMware-Tanzu/1.2/service-installer/GUID-WhatsNew.html
 
+Service installer peut être téléchargé depuis la marketplace vmware : https://marketplace.cloud.vmware.com/services/details/service-installer-for-vmware-tanzu-1?slug=true
+
 for airgapped 
     télécharger:
         - SIVT v1.2 (Service installer for VMware Tanzu)
