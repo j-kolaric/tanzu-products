@@ -1,23 +1,27 @@
 apiVersion: run.tanzu.vmware.com/v1alpha2
 kind: TanzuKubernetesCluster
 metadata:
-  name: mycluster2_v1alpha2
-  namespace: jkolaric-01
+  name: tap-13-iteratecluster
+  namespace: vns-jko
 spec:
   topology:
     controlPlane:
       replicas: 1
-      vmClass: best-effort-small
+      vmClass: best-effort-large
       storageClass: tanzu-sp
       tkr:  
         reference:
-          name: v1.21.2---vmware.1-tkg.1.ee25d55
+          name: v1.22.9---vmware.1-tkg.1.cc71bc8
     nodePools:
     - name: worker-nodepool-a1
       replicas: 1
-      vmClass: best-effort-small
+      vmClass: best-effort-large
       storageClass: tanzu-sp
       tkr:  
         reference:
-          name: v1.21.2---vmware.1-tkg.1.ee25d55
-
+          name: v1.22.9---vmware.1-tkg.1.cc71bc8
+      volumes:
+      - capacity:
+          storage: 70Gi
+        mountPath: /var/lib/containerd
+        name: containerd

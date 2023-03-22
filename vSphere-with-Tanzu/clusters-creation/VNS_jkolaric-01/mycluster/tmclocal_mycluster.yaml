@@ -1,0 +1,18 @@
+apiVersion: run.tanzu.vmware.com/v1alpha1      #TKGS API endpoint
+kind: TanzuKubernetesCluster                   #required parameter
+metadata:
+  name: tmccluster                     #cluster name, user defined
+  namespace: tmclocal
+spec:
+  distribution:
+    version: v1.23                             #Resolves to the latest v1.18 image
+  topology:
+    controlPlane:
+      count: 1                                 #number of control plane nodes
+      class: best-effort-large                 #vmclass for control plane nodes
+      storageClass: tanzu-sp
+    workers:
+      count: 3                                 #number of worker nodes
+      class: best-effort-large                 #vmclass for worker nodes
+      storageClass: tanzu-sp
+
