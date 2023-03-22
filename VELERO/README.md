@@ -679,7 +679,7 @@ pod/redis-master-7bccc485fc-6nqw6   1/1     Running   0          79s
 pod/redis-slave-6478c45567-nvcck    1/1     Running   0          79s
 
 NAME                   TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
-service/frontend       LoadBalancer   10.108.163.123   10.16.3.9     80:30078/TCP   78s
+service/frontend       LoadBalancer   10.108.163.123   10.16.3.16     80:30078/TCP   78s
 service/redis-master   ClusterIP      10.105.217.184   <none>        6379/TCP       77s
 service/redis-slave    ClusterIP      10.104.106.126   <none>        6379/TCP       77s
 
